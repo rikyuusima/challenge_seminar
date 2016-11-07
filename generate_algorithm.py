@@ -23,13 +23,21 @@ class Generate:
     def set_target(self, target):
         self.target = target
     # Search
-    def proof_algorithm(self, target_calc):
+    def proof(self):
+        if self.target[0, 0] == 0:
+            return self.OMEGA.dot(self.target)
+        elif self.target[1, 0] == 0:
+            return self.target
+        else:
+            return self.search()
+
+    # if Part a * Part c != 0
+    def search_algorithm(self, target_calc):
         # if |Part a| < |Part c|
         if np.fabs(target_calc[(0, 0)]) < np.fabs(target_calc[(1, 0)]):
             # ω・target_calc
             target_calc = self.OMEGA.dot(target_calc)
 
-        print(target_calc)
 
         # int((Part a)) // int((Part b))
         quotient = int(target_calc[(0, 0)]) // int(target_calc[(1, 0)])
@@ -37,19 +45,19 @@ class Generate:
         remainder =  target_calc[(0, 0)] - quotient * target_calc[(1, 0)]
 
         # if |remainder| > |Part c|
-        if np.fabs(remainder) > np.fabs(target_calc[(1, 0)]) or remainder <= 0:
-            # int((Part a)) % int((Part b))
+        if remainder < 0:
+            # int((Part a)) % int((Part c))
             remainder_inc =  target_calc[(0, 0)] - (quotient + 1) * target_calc[(1, 0)]
             remainder_dec =  target_calc[(0, 0)] - (quotient - 1) * target_calc[(1, 0)]
 
-            if np.fabs(remainder_inc) > np.fabs(remainder_dec):
-                quotient -= 1
-                remainder = remainder_dec
-            else:
+            if remainder_inc >= 0:
                 quotient += 1
                 remainder = remainder_inc
+            else:
+                quotient -= 1
+                remainder = remainder_dec
 
-        target_calc = la.matrix_power(la.inv(self.SIGMA), int(quotient)).dot(target_calc)
+        target_calc = la.matrix_power(self.SIGMA, -1 * int(quotient)).dot(target_calc)
         target_calc = self.OMEGA.dot(target_calc)
 
         return target_calc
@@ -57,10 +65,11 @@ class Generate:
     def search(self):
         target_calc = self.target
         while True:
-            target_calc = self.proof_algorithm(target_calc)
+            print(target_calc)
+            input()
+            target_calc = self.search_algorithm(target_calc)
             if target_calc[(1, 0)] == 0:
-                self.target = target_calc
-                return
+                return target_calc
 
 def main():
     # Define Determinant for ∈ SL(2, Z)
@@ -88,9 +97,8 @@ def main():
     gen = Generate()
     gen.set_target(target)
 
-    # Run Search
-    gen.search()
-    print(gen.target)
+    # Run Search and Print Result
+    print(gen.proof())
 
 if __name__ == '__main__':
     main()
