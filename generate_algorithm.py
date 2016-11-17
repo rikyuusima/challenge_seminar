@@ -7,12 +7,14 @@ class Generate:
     def __init__(self):
         # target
         self.target = np.eye(2)
-        # Define Part c Element
-        self.PART_C_LINE = 1
-        self.PART_C_COLUMN = 0
+        # result
+        self.result = np.eye(2)
         # Define Seeds
         self.SIGMA = np.array([[1, 1], [0, 1]])
         self.OMEGA = np.array([[0, 1], [-1, 0]])
+        # Inverse element
+        self.sigma_inv_element = []
+        self.omega_inv_element = []
 
     # Method
 
@@ -25,11 +27,22 @@ class Generate:
     # Search
     def proof(self):
         if self.target[0, 0] == 0:
-            return self.OMEGA.dot(self.target)
+            POW = 1
+            result = la.matrix_power(self.OMEGA, POW).dot(self.target)
+            self.omega_inv_element.append(-1 * POW)
         elif self.target[1, 0] == 0:
-            return self.target
+            result = self.target
         else:
-            return self.search()
+            result = self.search_loop()
+
+
+    def search_loop(self):
+        target_calc = self.target
+        while True:
+            print(target_calc)
+            target_calc = self.search_algorithm(target_calc)
+            if target_calc[(1, 0)] == 0:
+                return target_calc
 
     # if Part a * Part c != 0
     def search_algorithm(self, target_calc):
@@ -62,14 +75,6 @@ class Generate:
 
         return target_calc
 
-    def search(self):
-        target_calc = self.target
-        while True:
-            print(target_calc)
-            input()
-            target_calc = self.search_algorithm(target_calc)
-            if target_calc[(1, 0)] == 0:
-                return target_calc
 
 def main():
     # Define Determinant for ∈ SL(2, Z)
@@ -98,7 +103,8 @@ def main():
     gen.set_target(target)
 
     # Run Search and Print Result
-    print(gen.proof())
+    gen.proof()
+    print(gen.result)
 
 if __name__ == '__main__':
     main()
