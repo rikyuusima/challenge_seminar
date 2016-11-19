@@ -4,4 +4,7 @@ python:
 install:
   - pip install -r ./requirements.txt
 script:
-  - python main.py
+  - python main.py 2 1 5 3
+  - python main.py 1 100 0 1
+  - python main.py 0 1 -1 100
+  - python main.py 0 -1 1 100

@@ -1,5 +1,7 @@
 # Challenge Seminar
 
+[![Build Status](https://travis-ci.org/rikyuusima/challenge_seminar.svg?branch=master)](https://travis-ci.org/rikyuusima/challenge_seminar)
+
 ## Summary
 * Project for Challenge Seminar in NIT, Tsuyama College in 2016.
 * Elementary number theory.
