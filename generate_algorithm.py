@@ -51,17 +51,25 @@ class Generate:
             # ω・target_calc
             target_calc = self.OMEGA.dot(target_calc)
 
+        # Part a // Part c, Part a % Part c
+        division = self.euclidean_division(target_calc[0, 0], target_calc[1, 0])
 
-        # int((Part a)) // int((Part b))
-        quotient = int(target_calc[(0, 0)]) // int(target_calc[(1, 0)])
-        # int((Part a)) % int((Part b))
-        remainder =  target_calc[(0, 0)] - quotient * target_calc[(1, 0)]
+        # ω・σ^(-quotient)・target_calc
+        target_calc = self.OMEGA.dot(la.matrix_power(self.SIGMA, -1 * division["quotient"]).dot(target_calc))
 
-        # if |remainder| > |Part c|
+        return target_calc
+
+    # calced by euclidean_division
+    def euclidean_division(self, dividend, divisor):
+        # calc division
+        quotient = int(dividend) // int(divisor)
+        # calc remainder
+        remainder =  dividend - quotient * divisor
+
         if remainder < 0:
-            # int((Part a)) % int((Part c))
-            remainder_inc =  target_calc[(0, 0)] - (quotient + 1) * target_calc[(1, 0)]
-            remainder_dec =  target_calc[(0, 0)] - (quotient - 1) * target_calc[(1, 0)]
+            # calc remainder
+            remainder_inc =  dividend - (quotient + 1) * divisor
+            remainder_dec =  dividend - (quotient - 1) * divisor
 
             if remainder_inc >= 0:
                 quotient += 1
@@ -70,11 +78,8 @@ class Generate:
                 quotient -= 1
                 remainder = remainder_dec
 
-        target_calc = la.matrix_power(self.SIGMA, -1 * int(quotient)).dot(target_calc)
-        target_calc = self.OMEGA.dot(target_calc)
-
-        return target_calc
-
+        return {"quotient": int(quotient),
+                "remainder": int(remainder)}
 
 def main():
     # Define Determinant for ∈ SL(2, Z)
