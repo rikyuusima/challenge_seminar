@@ -52,25 +52,28 @@ class Generate:
     # Getter
     def get_target(self):
         return self.target
+
     # Setter
     def set_target(self, target):
         if judge_sl2Z(target):
             self.target = target
+
     # Search
     def proof(self):
         if self.target[0, 0] == 0:
-            result = self.OMEGA.dot(self.target)
+            self.result = self.OMEGA.dot(self.target)
         elif self.target[1, 0] == 0:
-            result = self.target
+            self.result = self.target
         else:
-            result = self.search_loop()
+            self.result = self.search_loop()
 
     # loop algorithm
     def search_loop(self):
         target_calc = self.target
+        print(target_calc)
         while True:
-            print(target_calc)
             target_calc = self.search_algorithm(target_calc)
+            print(target_calc)
             if target_calc[(1, 0)] == 0:
                 return target_calc
 

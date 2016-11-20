@@ -36,6 +36,7 @@ def main():
     # Run Search
     gen.proof()
     #  Print Result
+    print("result:")
     print(gen.result)
 
 if __name__ == '__main__':
