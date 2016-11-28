@@ -7,8 +7,21 @@
 * Elementary number theory.
 * [Dr. Yoshida](http://www.tsuyama-ct.ac.jp/gakkaVer4/SCC/kyouin/yoshida.html) Lab.
 
+`main`
+* Call `generate_algorithm`
+* Input Property
+* Output Result
+
 `generate_algorithm`
 * Proof [[1, 1], [0, 1]] and [[0, 1], [-1, 0]] can generate the element of SL(2, Z).
+
+`diviion`
+* Define Division algorithm.
+  - Euclidean
+
+`sl2z`
+* Define about SL(2, Z)
+  - Judge(Is the arg element of SL(2, Z)?)
 
 ## License
 Copyright (c) 2016 rikyuusima  

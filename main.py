@@ -33,6 +33,8 @@ def main():
     # Set and Judge element of SL(2, Z)
     gen.set_target(target)
 
+    gen.set_isShowProcess(True)
+
     # Run Search
     gen.proof()
     #  Print Result
