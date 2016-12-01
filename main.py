@@ -39,7 +39,15 @@ def main():
     gen.proof()
     #  Print Result
     print("result:")
-    print(gen.result)
+    print(gen. get_result())
 
+    for matrix in gen.exp_i_seed_matrix:
+        if matrix['type'] == 'omega':
+            sys.stdout.write('ω ^ ' + str(matrix['exp']))
+        elif matrix['type'] == 'sigma':
+            sys.stdout.write('σ ^ ' + str(matrix['exp']))
+        sys.stdout.write(' ')
+
+    print("")
 if __name__ == '__main__':
     main()
