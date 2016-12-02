@@ -5,6 +5,8 @@ import numpy.linalg as la
 import sl2z
 import division as divi
 
+# σ^bとかけることを考慮する
+
 class Generate:
     # Constructor
     def __init__(self):
@@ -46,17 +48,20 @@ class Generate:
         self.isshowprocess = bool(isshowprocess)
 
     def set_exp_seed_matrix(self, seed_type, exp):
-        self.exp_seed_matrix.append({'type': seed_type, 'exp': exp})
-        self.exp_i_seed_matrix.append({'type': seed_type, 'exp': -1 * exp})
+        self.exp_seed_matrix.append({'type': seed_type, 'exp': int(exp)})
+        self.exp_i_seed_matrix.append({'type': seed_type, 'exp': -1 * int(exp)})
 
     # Search
     def proof(self):
         if self.target[0, 0] == 0:
             self.result = self.OMEGA.dot(self.target)
+            self.set_exp_seed_matrix('omega', 1)
+            self.set_exp_seed_matrix('sigma', -1 * self.result[0, 1])
             # append Exp val
 
         elif self.target[1, 0] == 0:
             self.result = self.target
+            self.set_exp_seed_matrix('sigma', -1 * self.result[0, 1])
         else:
             self.result = self.search_loop()
 
@@ -82,13 +87,13 @@ class Generate:
                 if self.isshowprocess:
                     print(target_calc)
 
-                self.set_exp_seed_matrix('sigma', 1)
+                self.set_exp_seed_matrix('sigma', -1 * target_calc[0, 1])
                 # -E
                 self.set_exp_seed_matrix('omega', -2)
                 return target_calc
 
             elif np.array_equal(self.SIGMA, target_calc):
-                self.set_exp_seed_matrix('sigma', 1)
+                self.set_exp_seed_matrix('sigma', target_calc[0, 1])
                 # Sort reverse
                 self.exp_seed_matrix.reverse()
                 return target_calc
