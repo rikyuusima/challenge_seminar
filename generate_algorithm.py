@@ -5,8 +5,6 @@ import numpy.linalg as la
 import sl2z
 import division as divi
 
-# σ^bとかけることを考慮する
-
 class Generate:
     # Constructor
     def __init__(self):
@@ -115,6 +113,11 @@ class Generate:
         if np.fabs(target_calc[(0, 0)]) < np.fabs(target_calc[(1, 0)]):
             # ω・target_calc
             target_calc = self.OMEGA.dot(target_calc)
+
+            # Show Calc Process
+            if self.isshowprocess:
+                print(target_calc)
+
             # append Exp val
             self.set_exp_seed_matrix('omega', 1)
 
