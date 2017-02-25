@@ -9,4 +9,4 @@ def judge_sl2Z(matrix):
     if int(np.round(la.det(matrix))) == SL2Z_DET:
         return True
     else:
-        raise ValueError("Input matrix is not element of SL(2, Z)")
+        return False

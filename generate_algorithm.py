@@ -41,6 +41,8 @@ class Generate:
     def set_target(self, target):
         if sl2z.judge_sl2Z(target):
             self.target = target
+        else:
+            raise ValueError("Input matrix is not element of SL(2, Z)")
 
     def set_isShowProcess(self, isshowprocess):
         self.isshowprocess = bool(isshowprocess)
@@ -84,7 +86,14 @@ class Generate:
             print(target_calc)
 
         while True:
-            if np.array_equal(la.matrix_power(self.SIGMA, -1 * int(target_calc[0, 1])).dot(la.matrix_power(self.OMEGA, 2)), target_calc):
+            if np.array_equal(np.eye(2), target_calc):
+                # E
+                return target_calc
+            elif np.array_equal(-1 * np.eye(2), target_calc):
+                # -E
+                self.set_exp_seed_matrix('omega', -2)
+                return target_calc
+            elif np.array_equal(la.matrix_power(self.SIGMA, -1 * int(target_calc[0, 1])).dot(la.matrix_power(self.OMEGA, 2)), target_calc):
                 # Show Calc Process
                 if self.isshowprocess:
                     print(target_calc)
@@ -124,7 +133,7 @@ class Generate:
         # Part a // Part c, Part a % Part c
         division = divi.euclidean(target_calc[0, 0], target_calc[1, 0])
 
-        # ω・σ^(-quotient)・target_calc
+        # σ^(-quotient)・target_calc
         target_calc = self.OMEGA.dot(la.matrix_power(self.SIGMA, -1 * division["quotient"]).dot(target_calc))
         # append Exp val
         self.set_exp_seed_matrix('sigma', -1 * division["quotient"])
