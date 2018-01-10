@@ -5,7 +5,7 @@
 ## Summary
 * Project for Challenge Seminar in NIT, Tsuyama College in 2016.
 * Elementary number theory.
-* [Dr. Yoshida](http://www.tsuyama-ct.ac.jp/gakkaVer4/SCC/kyouin/yoshida.html) Lab.
+* [Dr. Yoshida](http://www.tsuyama-ct.ac.jp/gakkaVer4/kyouin/yoshida/yoshida.html) Lab.
 
 `main`
 * Call `generate_algorithm`
