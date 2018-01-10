@@ -1,6 +1,6 @@
 # Challenge Seminar
 
-[![Build Status](https://travis-ci.org/rikyuusima/challenge_seminar.svg?branch=master)](https://travis-ci.org/rikyuusima/challenge_seminar)
+[![Build Status](https://travis-ci.org/equanz/challenge_seminar.svg?branch=master)](https://travis-ci.org/equanz/challenge_seminar)
 
 ## Summary
 * Project for Challenge Seminar in NIT, Tsuyama College in 2016.
@@ -24,6 +24,6 @@
   - Judge(Is the arg element of SL(2, Z)?)
 
 ## License
-Copyright (c) 2016 rikyuusima  
+Copyright (c) 2016 equanz  
 Released under the MIT license  
 http://opensource.org/licenses/mit-license.php
